@@ -7,9 +7,20 @@ const Todo = () => {
   const handleChange = (e) => {
     setSvalue(e.target.value);
   };
+  const handletoggle = (id) => {
+    const updatedTodo = todos.map((item) =>
+      item.id === id ? { ...item, isCompleted: !item.isCompleted } : item
+    );
+    setTodos(updatedTodo);
+  };
   const Delete = (id) => {
     let newTodos = todos.filter((todo) => todo.id != id);
     setTodos(newTodos);
+  };
+  const completed = () => {
+    let completedlist = todos.filter((todo) => todo.isCompleted == true);
+    // console.log(completedlist);
+    setTodos(completedlist);
   };
   return (
     <div>
@@ -29,6 +40,9 @@ const Todo = () => {
           }
         }}
       />
+      <br />
+      <br />
+      <button onClick={completed}>Completed Todo</button>
       {/* <button onClick={()=>{
         // console.log(svalue);
         // todos.push(svalue);
@@ -40,7 +54,12 @@ const Todo = () => {
       <div className={styles.todolist}>
         {todos.map((todo) => (
           <div className={styles.box}>
-            <TodoItem key={todo.id} todo={todo} onDelete={Delete} />
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              onDelete={Delete}
+              handletoggle={() => handletoggle(todo.id)}
+            />
           </div>
         ))}
       </div>
